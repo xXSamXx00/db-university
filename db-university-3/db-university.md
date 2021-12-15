@@ -11,3 +11,10 @@ Query con Join
 4: SELECT `students`.`name`, `students`.`surname`, `students`.`date_of_birth`, `students`.`email`, `degrees`.`name`, `degrees`.`level`, `degrees`.`address`, `departments`.`name` FROM `students` JOIN `degrees` ON `degrees`.`id` = `students`.`degree_id` JOIN `departments` ON `departments`.`id` = `degrees`.`department_id` ORDER BY `students`.`surname`, `students`.`name`; 
 5: SELECT * FROM `degrees` JOIN `courses` ON `degrees`.`id` = `courses`.`degree_id` JOIN `course_teacher` ON `course_teacher`.`course_id` = `courses`.`id` JOIN `teachers` ON `teachers`.`id` = `course_teacher`.`teacher_id`;
 6: SELECT DISTINCT `teachers`.* FROM `teachers` JOIN `course_teacher` ON `course_teacher`.`teacher_id` = `teachers`.`id` JOIN `courses` ON `courses`.`id` = `course_teacher`.`course_id` JOIN `degrees` ON `degrees`.`id` = `courses`.`degree_id` JOIN `departments` ON `departments`.`id` = `degrees`.`department_id` WHERE `departments`.`name` = 'Dipartimento di Matematica';
+BONUS 7:    SELECT COUNT(`exams`.`id`) AS `number_exams`, `courses`.`name`, `students`.`name`, `students`.`surname` 
+            FROM `exam_student` 
+            JOIN `students` ON `exam_student`.`student_id` = `students`.`id` 
+            JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id` 
+            JOIN `courses` ON `exams`.`course_id` = `courses`.`id` 
+            GROUP BY `exams`.`course_id`, `students`.`id` 
+            ORDER BY `students`.`surname`, `students`.`name`
